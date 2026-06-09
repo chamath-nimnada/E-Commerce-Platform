@@ -24,10 +24,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto gap-3 fw-medium">
-                    <li class="nav-item"><a class="nav-link text-dark text-decoration-underline active" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark hover-primary" href="contact.php">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark hover-primary" href="about.php">About</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark hover-primary" href="signup.php">Sign Up</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signup.php">Sign Up</a></li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex align-items-center bg-light px-3 py-2 rounded" style="min-width: 240px;">

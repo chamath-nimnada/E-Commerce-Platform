@@ -1,8 +1,8 @@
 <?php include 'header.php'; ?>
 
 <main class="container">
-    <section class="row mt-4 mb-5">
-        <div class="col-lg-3 d-none d-lg-block border-end pe-4 pt-3">
+    <section class="row mt-4 mb-5 hero-sec">
+        <div class="category-sec col-lg-3 d-none d-lg-block border-end pe-4 pt-3">
             <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
                 <li><a href="#" class="text-dark text-decoration-none d-flex justify-content-between align-items-center hover-primary">Computers & PCs <i class="bi bi-chevron-right small"></i></a></li>
                 <li><a href="#" class="text-dark text-decoration-none d-flex justify-content-between align-items-center hover-primary">Laptops <i class="bi bi-chevron-right small"></i></a></li>
@@ -167,5 +167,6 @@
         <hr class="mt-5 text-muted border-secondary opacity-25">
     </section>
 </main>
+
 
 <?php include 'footer.php'; ?>

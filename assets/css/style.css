@@ -136,3 +136,32 @@ input[type="search"]:focus {
     outline: none !important;
     box-shadow: none;
 }
+
+.navbar-nav .nav-link {
+    color: #000;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #db4444;
+}
+
+.navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #db4444;
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+.hero-sec {
+    height: 100vh;
+}
