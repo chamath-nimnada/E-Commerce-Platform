@@ -38,135 +38,176 @@
         </div>
     </section>
 
+    <?php include 'components/flash_sale.php'; ?>
+
     <section class="mb-5">
         <div class="d-flex align-items-center gap-3 mb-3">
             <div class="bg-primary rounded" style="width: 20px; height: 40px;"></div>
-            <h6 class="text-primary fw-bold mb-0">Today's</h6>
+            <h6 class="text-primary fw-bold mb-0">Our Products</h6>
         </div>
 
         <div class="d-flex flex-wrap align-items-end justify-content-between mb-4 gap-3">
-            <h2 class="fw-bold mb-0 me-md-5">Flash Sales</h2>
-            <div class="d-flex gap-3 me-auto fs-3 fw-bold align-items-end">
-                <div class="d-flex flex-column align-items-center lh-1"><span class="small fs-6 fw-medium text-muted">Days</span><span>03</span></div>
-                <span class="text-danger fs-4 mb-1">:</span>
-                <div class="d-flex flex-column align-items-center lh-1"><span class="small fs-6 fw-medium text-muted">Hours</span><span>23</span></div>
-                <span class="text-danger fs-4 mb-1">:</span>
-                <div class="d-flex flex-column align-items-center lh-1"><span class="small fs-6 fw-medium text-muted">Minutes</span><span>19</span></div>
-                <span class="text-danger fs-4 mb-1">:</span>
-                <div class="d-flex flex-column align-items-center lh-1"><span class="small fs-6 fw-medium text-muted">Seconds</span><span>56</span></div>
+            <h3 class="fw-bold mb-0 me-md-5">Most Sold Products</h3>
+        </div>
+
+        <div class="bg-light p-3 rounded mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+                <span class="fw-bold text-dark"><i class="bi bi-funnel"></i> Filter:</span>
+                <select class="form-select form-select-sm w-auto cursor-pointer shadow-none" id="filter-category">
+                    <option value="all">All Categories</option>
+                    <option value="Laptops">Laptops</option>
+                    <option value="Monitors">Monitors</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+                <select class="form-select form-select-sm w-auto cursor-pointer shadow-none" id="filter-price">
+                    <option value="all">All Prices</option>
+                    <option value="under100">Under $100</option>
+                    <option value="over100">$100 & Above</option>
+                </select>
             </div>
-            <div class="d-flex gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-arrow-left"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-arrow-right"></i></button>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+                <span class="fw-bold text-dark">Sort:</span>
+                <select class="form-select form-select-sm w-auto cursor-pointer shadow-none" id="sort-items">
+                    <option value="default">Default</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                </select>
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-            <div class="col">
-                <div class="card product-card h-100">
-                    <span class="product-badge">-40%</span>
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4 position-relative overflow-hidden" style="height: 250px;">
-                        <img src="https://placehold.co/150x150" alt="Product" class="img-fluid mix-blend-multiply">
-                        <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-heart"></i></button>
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-eye"></i></button>
-                        </div>
-                        <button class="btn btn-dark w-100 position-absolute bottom-0 start-0 rounded-0 add-to-cart opacity-0">Add To Cart</button>
+        <?php
+        $categories = ['Laptops', 'Monitors', 'Accessories'];
+        $all_products = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $all_products[] = [
+                'title' => 'Product Item ' . $i,
+                'price' => rand(50, 300),
+                'rating' => rand(3, 5),
+                'reviews' => rand(10, 150),
+                'category' => $categories[array_rand($categories)]
+            ];
+        }
+
+        if (empty($all_products)): ?>
+            <div class="bg-light rounded d-flex flex-column align-items-center justify-content-center p-5 text-center" style="min-height: 250px;">
+                <i class="bi bi-box-seam fs-1 text-secondary mb-3"></i>
+                <h5 class="fw-bold text-dark">Products Updating</h5>
+                <p class="text-muted mb-0">Our team is actively curating the best items. Check back shortly!</p>
+            </div>
+        <?php else: ?>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="main-product-grid">
+                <?php foreach ($all_products as $index => $product):
+                    $hiddenClass = $index >= 12 ? 'd-none default-hidden' : '';
+                ?>
+                    <div class="col product-item <?= $hiddenClass ?>"
+                        data-category="<?= $product['category'] ?>"
+                        data-price="<?= $product['price'] ?>">
+                        <?php
+                        $img = $product['img'] ?? null;
+                        $title = $product['title'] ?? null;
+                        $price = $product['price'] ?? null;
+                        $old_price = $product['old_price'] ?? null;
+                        $rating = $product['rating'] ?? null;
+                        $reviews = $product['reviews'] ?? null;
+                        $badge = $product['badge'] ?? null;
+                        include 'components/product_card.php';
+                        ?>
                     </div>
-                    <div class="card-body px-0 pb-0">
-                        <h6 class="card-title fw-bold text-truncate mb-2">HAVIT HV-G92 Gamepad</h6>
-                        <div class="d-flex gap-2 align-items-center mb-1">
-                            <span class="text-primary fw-bold">$120</span>
-                            <span class="text-muted text-decoration-line-through small">$160</span>
-                        </div>
-                        <div class="text-warning small">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill text-muted"></i>
-                            <span class="text-muted ms-1">(88)</span>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
 
-            <div class="col">
-                <div class="card product-card h-100">
-                    <span class="product-badge">-35%</span>
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4 position-relative overflow-hidden" style="height: 250px;">
-                        <img src="https://placehold.co/150x150" alt="Product" class="img-fluid mix-blend-multiply">
-                        <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-heart"></i></button>
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-eye"></i></button>
-                        </div>
-                        <button class="btn btn-dark w-100 position-absolute bottom-0 start-0 rounded-0 add-to-cart opacity-0">Add To Cart</button>
-                    </div>
-                    <div class="card-body px-0 pb-0">
-                        <h6 class="card-title fw-bold text-truncate mb-2">AK-900 Wired Keyboard</h6>
-                        <div class="d-flex gap-2 align-items-center mb-1">
-                            <span class="text-primary fw-bold">$96</span>
-                            <span class="text-muted text-decoration-line-through small">$116</span>
-                        </div>
-                        <div class="text-warning small">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-                            <span class="text-muted ms-1">(75)</span>
-                        </div>
-                    </div>
+            <?php if (count($all_products) > 12): ?>
+                <div class="text-center mt-5" id="load-more-wrapper">
+                    <button id="load-more-btn" class="btn btn-primary px-5 py-3 rounded-1 fw-medium">See More</button>
                 </div>
-            </div>
-
-            <div class="col">
-                <div class="card product-card h-100">
-                    <span class="product-badge">-30%</span>
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4 position-relative overflow-hidden" style="height: 250px;">
-                        <img src="https://placehold.co/150x150" alt="Product" class="img-fluid mix-blend-multiply">
-                        <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-heart"></i></button>
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-eye"></i></button>
-                        </div>
-                        <button class="btn btn-dark w-100 position-absolute bottom-0 start-0 rounded-0 add-to-cart opacity-0">Add To Cart</button>
-                    </div>
-                    <div class="card-body px-0 pb-0">
-                        <h6 class="card-title fw-bold text-truncate mb-2">IPS LCD Gaming Monitor</h6>
-                        <div class="d-flex gap-2 align-items-center mb-1">
-                            <span class="text-primary fw-bold">$370</span>
-                            <span class="text-muted text-decoration-line-through small">$400</span>
-                        </div>
-                        <div class="text-warning small">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                            <span class="text-muted ms-1">(99)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card product-card h-100">
-                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4 position-relative overflow-hidden" style="height: 250px;">
-                        <img src="https://placehold.co/150x150" alt="Product" class="img-fluid mix-blend-multiply">
-                        <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-heart"></i></button>
-                            <button class="btn btn-light bg-white rounded-circle shadow-sm p-2 lh-1 hover-primary"><i class="bi bi-eye"></i></button>
-                        </div>
-                        <button class="btn btn-dark w-100 position-absolute bottom-0 start-0 rounded-0 add-to-cart opacity-0">Add To Cart</button>
-                    </div>
-                    <div class="card-body px-0 pb-0">
-                        <h6 class="card-title fw-bold text-truncate mb-2">S-Series Comfort Chair</h6>
-                        <div class="d-flex gap-2 align-items-center mb-1">
-                            <span class="text-primary fw-bold">$375</span>
-                        </div>
-                        <div class="text-warning small">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-                            <span class="text-muted ms-1">(99)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-5">
-            <button class="btn btn-primary px-5 py-3 rounded-1 fw-medium">View All Products</button>
-        </div>
-        <hr class="mt-5 text-muted border-secondary opacity-25">
+            <?php endif; ?>
+        <?php endif; ?>
     </section>
 </main>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const grid = document.getElementById('main-product-grid');
+        if (!grid) return;
+
+        const items = Array.from(grid.querySelectorAll('.product-item'));
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loadMoreWrapper = document.getElementById('load-more-wrapper');
+
+        const catFilter = document.getElementById('filter-category');
+        const priceFilter = document.getElementById('filter-price');
+        const sortFilter = document.getElementById('sort-items');
+
+        function applyFiltersAndSort() {
+            const cat = catFilter.value;
+            const price = priceFilter.value;
+            const sort = sortFilter.value;
+
+            // 1. Sort the array
+            items.sort((a, b) => {
+                const pA = parseFloat(a.dataset.price);
+                const pB = parseFloat(b.dataset.price);
+                if (sort === 'low-high') return pA - pB;
+                if (sort === 'high-low') return pB - pA;
+                return 0;
+            });
+
+            // 2. Re-append to DOM in sorted order
+            items.forEach(item => grid.appendChild(item));
+
+            // 3. Filter visibility
+            let matchCount = 0;
+            items.forEach((item) => {
+                const itemCat = item.dataset.category;
+                const itemPrice = parseFloat(item.dataset.price);
+
+                const matchCat = (cat === 'all' || itemCat === cat);
+                const matchPrice = (price === 'all') ||
+                    (price === 'under100' && itemPrice < 100) ||
+                    (price === 'over100' && itemPrice >= 100);
+
+                if (matchCat && matchPrice) {
+                    item.classList.remove('d-none');
+                    item.classList.remove('default-hidden');
+                    matchCount++;
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+
+            // 4. Hide "See More" if filters are active to avoid pagination conflicts
+            if (loadMoreWrapper) {
+                if (cat !== 'all' || price !== 'all' || sort !== 'default') {
+                    loadMoreWrapper.style.display = 'none';
+                } else {
+                    // Reset default view (hide items beyond 12)
+                    loadMoreWrapper.style.display = 'block';
+                    items.forEach((item, index) => {
+                        if (index >= 12) {
+                            item.classList.add('d-none', 'default-hidden');
+                        }
+                    });
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'inline-block';
+                }
+            }
+        }
+
+        if (catFilter) catFilter.addEventListener('change', applyFiltersAndSort);
+        if (priceFilter) priceFilter.addEventListener('change', applyFiltersAndSort);
+        if (sortFilter) sortFilter.addEventListener('change', applyFiltersAndSort);
+
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                const hiddenItems = document.querySelectorAll('.product-item.default-hidden');
+                for (let i = 0; i < 4 && i < hiddenItems.length; i++) {
+                    hiddenItems[i].classList.remove('d-none', 'default-hidden');
+                }
+                if (document.querySelectorAll('.product-item.default-hidden').length === 0) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
 
 <?php include 'footer.php'; ?>
