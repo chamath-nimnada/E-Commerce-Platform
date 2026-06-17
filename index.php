@@ -1,7 +1,7 @@
 <?php include 'header.php'; ?>
 
 <main class="container">
-    <section class="row mt-4 mb-5 hero-sec">
+    <section id="hero-section" class="row mt-4 mb-5 hero-sec">
         <div class="category-sec col-lg-3 d-none d-lg-block border-end pe-4 pt-3">
             <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
                 <li><a href="#" class="text-dark text-decoration-none d-flex justify-content-between align-items-center hover-primary">Computers & PCs <i class="bi bi-chevron-right small"></i></a></li>
@@ -38,17 +38,19 @@
         </div>
     </section>
 
-    <?php include 'components/flash_sale.php'; ?>
+    <section id="flash-sale-section">
+        <?php include 'components/flash_sale.php'; ?>
+    </section>
 
-    <section class="mb-5">
+    <section id="products-section" class="mb-5">
         <div class="d-flex align-items-center gap-3 mb-3">
             <div class="bg-primary rounded" style="width: 20px; height: 40px;"></div>
             <h6 class="text-primary fw-bold mb-0">Our Products</h6>
         </div>
 
-        <div class="d-flex flex-wrap align-items-end justify-content-between mb-4 gap-3">
-            <h3 class="fw-bold mb-0 me-md-5">Most Sold Products</h3>
-        </div>
+        <!-- <div class="d-flex flex-wrap align-items-end justify-content-between mb-4 gap-3">
+            <h3 class="fw-bold mb-0 me-md-5">All Products</h3>
+        </div> -->
 
         <div class="bg-light p-3 rounded mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
             <div class="d-flex flex-wrap gap-3 align-items-center">
